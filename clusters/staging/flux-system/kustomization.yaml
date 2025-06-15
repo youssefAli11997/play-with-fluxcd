@@ -3,3 +3,13 @@ kind: Kustomization
 resources:
 - gotk-components.yaml
 - gotk-sync.yaml
+patches:
+  - target:
+      kind: ServiceAccount
+      name: source-controller
+      namespace: flux-system
+      version: v1
+    patch: |-
+      - op: add
+        path: /metadata/annotations
+        value: {iam.gke.io/gcp-service-account: "hello@gco.io"}
